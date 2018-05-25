@@ -1,0 +1,41 @@
+apply plugin: 'com.android.application'
+
+static def buildDateTime() {
+    /**
+     * Use the number of seconds/10 since Jan 1 2017 as the versionCode.
+     * This lets us upload a new build at most every 10 seconds for the
+     * next 680 years.
+     */
+    def code = (int) (((new Date().getTime() / 1000) - 1483228800) / 10)
+    return code
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        applicationId "com.target.dealbrowserpoc.dealbrowser"
+        minSdkVersion 15
+        targetSdkVersion 19
+        versionCode buildDateTime()
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //compile "com.android.support:recyclerview-v7:23.4.1"
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation "com.squareup.picasso:picasso:2.5.2"
+    annotationProcessor 'com.bluelinelabs:logansquare-compiler:1.3.6'
+    compile 'com.bluelinelabs:logansquare:1.3.6'
+    compile 'org.apache.commons:commons-lang3:3.6'
+}
